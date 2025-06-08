@@ -23,7 +23,7 @@ notes = ["FIXME", "XXX", "TODO"]
 
 [project]
 name = "dinov2"
-version = "0.1.0"
+version = "0.1.0dev1"
 description = ""
 authors = [{ name = "Au Pair", email = "au.pair.10@proton.me" }]
 readme = "README.md"
