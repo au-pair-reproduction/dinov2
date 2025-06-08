@@ -7,10 +7,7 @@ score = false
 
 [tool.pylint.messages_control]
 disable = "all"
-enable = [
-  "miscellaneous",
-  "similarities",
-]
+enable = ["miscellaneous", "similarities"]
 
 [tool.pylint.similarities]
 ignore-comments = true
@@ -22,8 +19,63 @@ min-similarity-lines = 8
 reports = false
 
 [tool.pylint.miscellaneous]
-notes = [
-  "FIXME",
-  "XXX",
-  "TODO",
+notes = ["FIXME", "XXX", "TODO"]
+
+[project]
+name = "dinov2"
+version = "0.1.0"
+description = ""
+authors = [{ name = "Au Pair", email = "au.pair.10@proton.me" }]
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "torchmetrics (>=1.7.1,<2.0.0)",
+  "fvcore (>=0.1.5.post20221221,<0.2.0)",
+  "iopath (>=0.1.10,<0.2.0)",
+  "xformers (>=0.0.30,<0.0.31)",
+  "submitit (>=1.5.3,<2.0.0)",
+  # "libcudf-cu12 (==25.4)",
+  # "cudf-cu12 (==25.4)",
+  # "cuml-cu12 (>=25.4.0,<26.0.0)",
 ]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+torch = { version = "^2.7", source = "pytorch-cpu", markers = "extra=='cpu' and extra!='cuda'" }
+torchvision = { version = "^0.22", source = "pytorch-cpu", markers = "extra=='cpu' and extra!='cuda'" }
+cuml-cu12 = { version = ">=25.4.0, <26.0.0", source = "nvidia" }
+
+[tool.poetry.group.cuda]
+optional = true
+
+# https://github.com/pytorch/pytorch/blob/main/RELEASE.md#release-compatibility-matrix
+[tool.poetry.group.cuda.dependencies]
+torch = { version = "^2.7", source = "pytorch-cuda", markers = "extra=='cuda' and extra!='cpu'" }
+torchvision = { version = "^0.22", source = "pytorch-cuda", markers = "extra=='cuda' and extra!='cpu'" }
+
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^9.2.0"
+
+[project.optional-dependencies]
+cpu = ["torch", "torchvision"]
+cuda = ["torch", "torchvision"]
+
+[[tool.poetry.source]]
+name = "pytorch-cuda"
+priority = "explicit"
+url = "https://download.pytorch.org/whl/cu128"
+
+[[tool.poetry.source]]
+name = "pytorch-cpu"
+priority = "explicit"
+url = "https://download.pytorch.org/whl/cpu"
+
+[[tool.poetry.source]]
+name = "nvidia"
+priority = "explicit"
+url = "https://pypi.nvidia.com"
